@@ -42,7 +42,9 @@ class Oplata
 
     public static function getSignature($data, $password, $encoded = true)
     {
-        $data = array_filter($data);
+        $data = array_filter($data, function($var) {
+            return $var !== '' && $var !== null;
+        });
         ksort($data);
 
         $str = $password;
