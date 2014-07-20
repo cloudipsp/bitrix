@@ -29,3 +29,4 @@
 В настройках вашего мерчанта на Oplata необходимо указать ссылку возврата информации о статусе платежа на страницу `http://yoursite.com/bitrix/tools/oplata_result.php`
 
 
+[1]: https://raw.githubusercontent.com/oplatacom/bitrix/master/settings.png
