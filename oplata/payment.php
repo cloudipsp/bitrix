@@ -1,8 +1,12 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 include dirname(__FILE__) . "/oplata.cls.php";
 
-if ( isset($arResult['ORDER_ID']) ) $ORDER_ID = $arResult['ORDER_ID'];
-  else $ORDER_ID = (int)$_GET['ORDER_ID'];
+if ( isset($arResult['ORDER_ID']) ) {
+    $ORDER_ID = $arResult['ORDER_ID'];
+}
+  else {
+    $ORDER_ID = $_GET['ORDER_ID'];
+}
 
 
 #--------------------------------------------
