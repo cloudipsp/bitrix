@@ -10,7 +10,7 @@ if ( isset($arResult['ORDER_ID']) ) {
 
 
 #--------------------------------------------
-$arOrder = CSaleOrder::GetByID($ORDER_ID);
+$arOrder = CSaleOrder::GetByID((int)$ORDER_ID);
 
 $orderID = "OplataOrder_".$ORDER_ID."_".CSaleBasket::GetBasketUserID()."_". md5( "oplataOrder_".time() );
 
