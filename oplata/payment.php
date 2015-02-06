@@ -10,7 +10,8 @@ if ( isset($arResult['ORDER_ID']) ) {
 
 
 #--------------------------------------------
-$arOrder = CSaleOrder::GetByID((int)$ORDER_ID);
+$ORDER_ID = filter_var($ORDER_ID, FILTER_SANITIZE_NUMBER_INT);
+$arOrder = CSaleOrder::GetByID($ORDER_ID);
 
 $orderID = "OplataOrder_".$ORDER_ID."_".CSaleBasket::GetBasketUserID()."_". md5( "oplataOrder_".time() );
 
@@ -40,4 +41,3 @@ echo '	<form action="' . Oplata::URL . '" method="post" id="oplata_payment_form"
         document.getElementById('oplata_payment_form').submit();
      }, 100);
     </script>";
- 
