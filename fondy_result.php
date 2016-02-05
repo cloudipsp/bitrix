@@ -1,6 +1,6 @@
 <?php
-#ini_set( "display_errors", true );
-#error_reporting( E_ALL );
+ini_set( "display_errors", true );
+error_reporting( E_ALL );
 
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") die();
@@ -37,20 +37,23 @@ if (CModule::IncludeModule('sale')) {
     } else {
         $answer = $oplataResult;
     }
-
-    $arFields = array(
-        "STATUS_ID" => $answer == 'OK' ? "P" : "N",
-        "PAYED" => $answer == 'OK' ? "Y" : "N",
-        "PS_STATUS" => $answer == 'OK' ? "Y" : "N",
-        "PS_STATUS_CODE" => $_POST['order_status'],
-        "PS_STATUS_DESCRIPTION" => $_POST['order_status'] . " " . $payID . " " .
-            ($answer != 'OK' ? $_REQUEST['response_description'] : ''),
-        "PS_STATUS_MESSAGE" => " - ",
-        "PS_SUM" => $_POST['amount'],
-        "PS_CURRENCY" => $_POST['currency'],
-        "PS_RESPONSE_DATE" => date("d.m.Y H:i:s"),
-    );
+	$arOrder = CSaleOrder::GetByID($ORDER_ID);
+    if ($arOrder) {
+        $arFields = array(
+            "STATUS_ID" => $answer == 'OK' ? "P" : "N",
+            "PAYED" => $answer == 'OK' ? "Y" : "N",
+            "PS_STATUS" => $answer == 'OK' ? "Y" : "N",
+            "PS_STATUS_CODE" => $_POST['order_status'],
+            "PS_STATUS_DESCRIPTION" => $_POST['order_status'] . " " . $payID . " " .
+                ($answer != 'OK' ? $_REQUEST['response_description'] : ''),
+            "PS_STATUS_MESSAGE" => " - ",
+            "PS_SUM" => $_POST['amount'],
+            "PS_CURRENCY" => $_POST['currency'],
+            "PS_RESPONSE_DATE" => date("d.m.Y H:i:s"),
+        );
+    }
     CSaleOrder::Update($ORDER_ID, $arFields);
+
     echo $answer;
 }
 

@@ -1,4 +1,4 @@
-Модуль Oplata для 1C Bitrix.
+Модуль Fondy для 1C Bitrix.
 =====
 
 Данный 1 модуль подходит для версий Малый бизнес, Бизнес и Бизнес Веб-кластер.
@@ -7,7 +7,7 @@
 
 #Инструкция по установке модуля оплаты Oplata под 1C Битрикс
 
-Папку oplata нужно разместить в `{Корневой каталог сайта}/bitrix/php_interface/include/sale_payment/`
+Папку oplata нужно разместить в `{Корневой каталог сайта}/bitrix/modules/sale/payment/`
 
 Файл oplata_result.php нужно вставить в папку `{Корневой каталог сайта}/bitrix/tools/`
 
@@ -26,7 +26,7 @@
 >6. Сделать платежную систему активной и нажать "Сохранить"
 
 
-В настройках вашего мерчанта на Oplata необходимо указать ссылку возврата информации о статусе платежа на страницу `http://yoursite.com/bitrix/tools/oplata_result.php`
+В настройках вашего мерчанта на Fondy необходимо указать ссылку возврата информации о статусе платежа на страницу `http://yoursite.com/bitrix/tools/fondy_result.php`
 
 
 [1]: https://raw.githubusercontent.com/oplatacom/bitrix/master/settings.png

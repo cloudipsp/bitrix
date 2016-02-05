@@ -9,7 +9,7 @@ class Oplata
 
     const SIGNATURE_SEPARATOR = '|';
 
-    const URL = "https://api.fondy.eu/api/checkout/url/";
+    const URL = "https://api.fondy.eu/api/checkout/redirect/";
 
     protected static $responseFields = array('rrn',
                                              'masked_card',
@@ -61,6 +61,7 @@ class Oplata
 
     public static function isPaymentValid($oplataSettings, $response)
     {
+		
         if ($oplataSettings['MERCHANT'] != $response['merchant_id']) {
             return 'An error has occurred during payment. Merchant data is incorrect.';
         }
@@ -73,6 +74,7 @@ class Oplata
         }
 
         if (self::getSignature($response, $oplataSettings['SECURE_KEY']) != $originalResponse['signature']) {
+			
             return 'An error has occurred during payment. Signature is not valid.';
         }
 
