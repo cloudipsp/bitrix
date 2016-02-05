@@ -2,8 +2,8 @@
 include(GetLangFileName(dirname(__FILE__) . "/", "/.description.php"));
 
 
-$psTitle = "Oplata";
-$psDescription = "<a href=\"https://oplata.com\" target=\"_blank\">https://oplata.com</a>";
+$psTitle = "Fondy";
+$psDescription = "<a href=\"https://fondy.eu\" target=\"_blank\">https://fondy.eu</a>";
 
 $array = array(
     'oplata_merchant',
