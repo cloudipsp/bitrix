@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 ini_set( "display_errors", true );
 error_reporting( E_ALL );
 
@@ -7,6 +7,14 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") die();
 if (!require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php")) die('prolog_before.php not found!');
 
 if (CModule::IncludeModule('sale')) {
+	if(empty($_POST)){
+	 $fap = json_decode(file_get_contents("php://input"));
+        $_POST=array();
+        foreach($fap as $key=>$val)
+        {
+          $_POST[$key] =  $val ;
+        }
+	}
     $ordArray = explode( "_", $_POST['order_id'] );
     $ORDER_ID = $ordArray[1];
     $User_ID = $ordArray[2];
@@ -53,8 +61,8 @@ if (CModule::IncludeModule('sale')) {
         );
     }
     CSaleOrder::Update($ORDER_ID, $arFields);
-
-    echo $answer;
+	
+    echo $answer."<script>window.location.replace('/personal/order/');</script>";
 }
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/epilog_after.php");
