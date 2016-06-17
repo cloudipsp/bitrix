@@ -29,4 +29,4 @@
 В настройках вашего мерчанта на Fondy необходимо указать ссылку возврата информации о статусе платежа на страницу `http://yoursite.com/bitrix/tools/fondy_result.php`
 
 
-[1]: https://raw.githubusercontent.com/oplatacom/bitrix/master/settings.png
+[1]: https://raw.githubusercontent.com/cloudipsp/bitrix/master/settings.png
