@@ -29,7 +29,7 @@ if (CModule::IncludeModule('sale')) {
     );
     $payData = $temp->Fetch();
 
-    include $_SERVER['DOCUMENT_ROOT'] . $payData['ACTION_FILE'] . "/oplata.cls.php";
+    include $_SERVER['DOCUMENT_ROOT'] . $payData['ACTION_FILE'] . "/fondy.cls.php";
 
     $oplataOpt = array();
     $b = unserialize($payData['PARAMS']);
@@ -40,7 +40,7 @@ if (CModule::IncludeModule('sale')) {
 
     if ($_REQUEST['order_status'] == Oplata::ORDER_DECLINED) {
         $answer = 'declined';
-    } elseif ($oplataResult === true) {
+    } elseif ($oplataResult == true) {
         $answer = 'OK';
     } else {
         $answer = $oplataResult;
@@ -61,7 +61,7 @@ if (CModule::IncludeModule('sale')) {
         );
     }
     CSaleOrder::Update($ORDER_ID, $arFields);
-	
+	//print_r ( $arFields);die;
     echo $answer."<script>window.location.replace('/personal/order/');</script>";
 }
 
