@@ -38,7 +38,7 @@ if (CModule::IncludeModule('sale')) {
     $oplata = new Oplata();
     $oplataResult = $oplata->isPaymentValid($oplataOpt, $_REQUEST);
 
-    if ($_REQUEST['order_status'] == Oplata::ORDER_DECLINED) {
+    if ($_REQUEST['order_status'] != Oplata::ORDER_APPROVED) {
         $answer = 'declined';
     } elseif ($oplataResult == true) {
         $answer = 'OK';
