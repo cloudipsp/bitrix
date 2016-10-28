@@ -36,7 +36,12 @@
 	"VALUE" => "",
 	"TYPE" => ""
     ),
-	
+	'SHOULD_PAY' => array(
+	'NAME'  => GetMessage('FONDY_AMOUNT'),
+	'DESCR' => '',
+	'VALUE' => 'SHOULD_PAY',
+	'TYPE'  => 'ORDER'
+	),
     "SERVER_CALLBACK_URL" => array(
 	"NAME" => GetMessage("FONDY_SERVER_CALLBACK_URL"),
 	"DESCR" => GetMessage("FONDY_DESC_SERVER_CALLBACK_URL"),
