@@ -14,11 +14,7 @@
 	$arOrder = CSaleOrder::GetByID($ORDER_ID);
 	$orderID = "Order_".$ORDER_ID."_".CSaleBasket::GetBasketUserID()."_". md5( "Order_".time() );
 	$shouldPay = (strlen(CSalePaySystemAction::GetParamValue("SHOULD_PAY", '')) > 0) ? CSalePaySystemAction::GetParamValue("SHOULD_PAY", 0) : $GLOBALS["SALE_INPUT_PARAMS"]["ORDER"]["SHOULD_PAY"];
-	if (CSalePaySystemAction::GetParamValue("ONPAGE")!='Y'){
-		$amount = round($shouldPay*100);	
-		}else{
-		$amount = 	$shouldPay;
-	}
+	$amount = round($shouldPay*100);	
 	$formFields = array('order_id' => $orderID,
     'merchant_id' => CSalePaySystemAction::GetParamValue("MERCHANT"),
     'order_desc' => $orderID,
@@ -44,6 +40,17 @@
 		</script>";
 	}
 	else{
+		$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, 'https://api.fondy.eu/api/checkout/url/');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('request'=>$formFields)));
+			$result = json_decode(curl_exec($ch));
+			if ($result->response->response_status == 'failure'){
+				echo $result->response->error_message;
+				exit;
+			}
 		$out =	"<script>
 		var checkoutStyles = {
 		'html , body' : {
@@ -112,17 +119,7 @@
 		this.loadUrl(url);
 		});
 		};
-		var button = $ipsp.get("button");
-		button.setMerchantId('.$formFields['merchant_id'].');
-		button.setAmount('.$formFields['amount'].', "'.$formFields['currency'].'", true);
-		button.setHost("api.fondy.eu");
-		button.addParam("order_desc","'.$formFields['order_desc'].'");
-		button.addParam("order_id","'.$formFields['order_id'].'");
-		button.addParam("lang","'.$formFields['lang'].'");//button.addParam("delayed","N");
-		button.addParam("server_callback_url","'.$formFields['server_callback_url'].'");
-		button.addParam("sender_email","'.$formFields['sender_email'].'");
-		button.setResponseUrl("'.$formFields['response_url'].'");
-		checkoutInit(button.getUrl());
+		checkoutInit("' . $result->response->checkout_url . '");
 		</script>';	
 	}
 	echo $out;	
