@@ -1,6 +1,8 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 	include dirname(__FILE__) . "/fondy.cls.php";
-	 
+	global $APPLICATION;
+	$APPLICATION->AddHeadScript('https://api.fondy.eu/static_common/v1/checkout/ipsp.js');	
+	CJSCore::Init(array("jquery"));
 	if ( isset($arResult['ORDER_ID']) ) {
 		$ORDER_ID = $arResult['ORDER_ID'];
 	}
@@ -40,17 +42,7 @@
 		</script>";
 	}
 	else{
-		$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, 'https://api.fondy.eu/api/checkout/url/');
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-			curl_setopt($ch, CURLOPT_POST, true);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('request'=>$formFields)));
-			$result = json_decode(curl_exec($ch));
-			if ($result->response->response_status == 'failure'){
-				echo $result->response->error_message;
-				exit;
-			}
+		$url = get_checkout($formFields);
 		$out =	"<script>
 		var checkoutStyles = {
 		'html , body' : {
@@ -91,8 +83,7 @@
 		},
 		}
 		</script>";
-		$out .=  '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-		<script src="https://api.fondy.eu/static_common/v1/checkout/ipsp.js"></script>
+		$out .=  '
 		<div id="checkout">
 		<div id="checkout_wrapper" style="width:600px;"></div>
 		</div>
@@ -119,7 +110,35 @@
 		this.loadUrl(url);
 		});
 		};
-		checkoutInit("' . $result->response->checkout_url . '");
+		checkoutInit("' . $url . '");
 		</script>';	
 	}
 	echo $out;	
+	function get_checkout($args){
+			if(is_callable('curl_init')){
+			$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'https://api.fondy.eu/api/checkout/url/');
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+				curl_setopt($ch, CURLOPT_POST, true);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('request'=>$args)));
+				
+				$result = json_decode(curl_exec($ch));
+				$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+					
+				if ( $httpCode != 200 ){
+					echo "Return code is {$httpCode} \n"
+						.curl_error($ch);
+						exit;
+				} 
+				if ($result->response->response_status == 'failure'){
+					echo $result->response->error_message;
+					exit;
+				}
+				$url = $result->response->checkout_url;
+				return $url;
+			}else{
+				echo "Curl not found!";
+				die;
+			}			
+		}
