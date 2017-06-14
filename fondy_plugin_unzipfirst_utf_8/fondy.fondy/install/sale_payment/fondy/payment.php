@@ -84,11 +84,11 @@
 		}
 		</script>";
 		$out .=  '
-		<div id="checkout">
-		<div id="checkout_wrapper" style="width:600px;"></div>
+		<div style="min-height:350px" id="checkout">
+		<div style="min-width:400px;min-height:350px" id="checkout_wrapper"></div>
 		</div>
 		<script>
-		function checkoutInit(url, val) {
+		function checkoutInit(url) {
 		$ipsp("checkout").scope(function() {
 		this.setCheckoutWrapper("#checkout_wrapper");
 		this.addCallback(__DEFAULTCALLBACK__);
@@ -99,10 +99,6 @@
 		});
 		this.action("hide", function(data) {
 		$("#checkout").hide();
-		});
-		this.width(val);
-		this.action("resize", function(data) {
-		$("#checkout_wrapper").width(val).height(data.height);
 		});
 		this.action("resize", function(data) {
 		$("#checkout_wrapper").height(data.height);
