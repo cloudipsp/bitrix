@@ -19,13 +19,16 @@
 	$amount = round($shouldPay*100);	
 	$formFields = array('order_id' => $orderID,
     'merchant_id' => CSalePaySystemAction::GetParamValue("MERCHANT"),
-    'order_desc' => $orderID,
+    'order_desc' => '№:' . $ORDER_ID,
     'amount' => $amount,
     'currency' => CSalePaySystemAction::GetParamValue("PRICE_CURRENCY"),
     'server_callback_url' => CSalePaySystemAction::GetParamValue("SERVER_CALLBACK_URL"),
     'response_url' => CSalePaySystemAction::GetParamValue("RESPONSE_URL"),
     'lang' => CSalePaySystemAction::GetParamValue("LANGUAGE"),
     'sender_email' => $USER->GetEmail());
+	if (CSalePaySystemAction::GetParamValue("PREAUTH")=='Y'){
+		$formFields['preauth'] = 'Y';
+	}
 	$formFields['signature'] = Fondy::getSignature($formFields, CSalePaySystemAction::GetParamValue("SECURE_KEY"));
 	$fondyArgsArray = array();
 	foreach ($formFields as $key => $value) {

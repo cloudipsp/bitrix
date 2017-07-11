@@ -7,6 +7,7 @@
 	
 	$array = array(
 	'fondy_onpage',
+	'fondy_preauth',
     'fondy_merchant',
     'fondy_secret_key',
     'fondy_price_currency',
@@ -19,6 +20,13 @@
 	$arPSCorrespondence = array(
 	"ONPAGE" => array(
 	"NAME" => GetMessage("FONDY_ONPAGE"),
+	'SORT' => 900,
+	"INPUT" => array(
+	'TYPE' => 'Y/N'
+	)
+	),
+	"PREAUTH" => array(
+	"NAME" => GetMessage("FONDY_PREAUTH"),
 	'SORT' => 900,
 	"INPUT" => array(
 	'TYPE' => 'Y/N'
