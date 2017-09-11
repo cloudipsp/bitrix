@@ -8,7 +8,7 @@
 	if (CModule::IncludeModule('sale')) {
 		if(empty($_POST)){
 			$callback = json_decode(file_get_contents("php://input"));
-			$_POST=array();
+			$_POST = array();
 			foreach($callback as $key=>$val)
 			{
 				$_POST[$key] =  $val ;
@@ -25,7 +25,7 @@
 		$temp = CSalePaySystemAction::GetList(array(),array("PAY_SYSTEM_ID" => $payID));
 		$payData = $temp->Fetch();
 		
-		include $_SERVER['DOCUMENT_ROOT'] . $payData['ACTION_FILE'] . "/fondy.cls.php";
+		require $_SERVER['DOCUMENT_ROOT'] . $payData['ACTION_FILE'] . "/fondy.cls.php";
 		
 		$fondyOpt = array();
 		$b = unserialize($payData['PARAMS']);

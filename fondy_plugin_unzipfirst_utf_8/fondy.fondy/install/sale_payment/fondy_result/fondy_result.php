@@ -25,7 +25,7 @@
 		$temp = CSalePaySystemAction::GetList(array(),array("PAY_SYSTEM_ID" => $payID));
 		$payData = $temp->Fetch();
 		
-		include $_SERVER['DOCUMENT_ROOT'] . $payData['ACTION_FILE'] . "/fondy.cls.php";
+		require $_SERVER['DOCUMENT_ROOT'] . $payData['ACTION_FILE'] . "/fondy.cls.php";
 		
 		$fondyOpt = array();
 		$b = unserialize($payData['PARAMS']);
@@ -49,7 +49,7 @@
             "PS_STATUS" => $answer == 'OK' ? "Y" : "N",
             "PS_STATUS_CODE" => $_POST['order_status'],
             "PS_STATUS_DESCRIPTION" => $_POST['order_status'] . " " . $payID . " " .
-			($answer != 'OK' ? $_REQUEST['response_description'] : ''),
+			($answer != 'OK' ? $_POST['response_description'] : ''),
             "PS_STATUS_MESSAGE" => " - ",
             "PS_SUM" => $_POST['amount'],
             "PS_CURRENCY" => $_POST['currency'],
