@@ -7,7 +7,7 @@
 
 #Инструкция по установке модуля оплаты Fondy под 1C Битрикс
 
-Папку fondy.fondy из папки с соответсвующей кодировкой (utf-8, win-1251) нужно разместить в `{Корневой каталог сайта}/bitrix/modules/`
+Папку fondy.fondy нужно разместить в `{Корневой каталог сайта}/bitrix/modules/` установить нужную кодировку!
 
 #После этого ативировать модуль(http://{your site}/bitrix/admin/partner_modules.php?lang=ru) и потом :
 
@@ -26,5 +26,6 @@
 
 В настройках вашего мерчанта на Fondy необходимо указать ссылку возврата информации о статусе платежа на страницу `http://yoursite.com/bitrix/tools/fondy_result.php`
 
+![1]
 
-[1]: https://raw.githubusercontent.com/cloudipsp/bitrix/master/settings.png
+[1]: https://raw.githubusercontent.com/cloudipsp/bitrix/master/fondy_plugin_unzipfirst_utf_8/settings.png

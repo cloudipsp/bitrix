@@ -3,6 +3,8 @@ global $MESS;
 $MESS["FONDY_MERCHANT"] = "Идентификатор мерчанта";
 $MESS["FONDY_SECURE_KEY"] = "Секретный ключ";
 $MESS["FONDY_PRICE_CURRENCY"] = "Валюта платежа";
+$MESS["FONDY_CLIENT_EMAIL"] = "Email клиента";
+$MESS["FONDY_ORDER_ID"] = "Идентефикатор заказа";
 $MESS["FONDY_DESC_PRICE_CURRENCY"] = "<b style='color=#aeaeae;'>Внимание!</b> Это значение должно соответствовать валюте вашего мерчанта";
 $MESS["FONDY_RESPONSE_URL"] = "Ссылка возврата клиента";
 $MESS["FONDY_DESC_RESPONSE_URL"] = "Ссылка, на которую вернется клиент после завершения платежа. <br>Например http://{yourdomain}/personal/order/";
