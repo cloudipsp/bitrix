@@ -31,8 +31,9 @@ class FondyHandler extends PaySystem\BaseServiceHandler implements PaySystem\IRe
         $busValues = $this->getParamsBusValue($payment);
         $amount = round($busValues['SHOULD_PAY'] * 100);
         $email = $busValues['BUYER_PERSON_EMAIL'];
-        if (empty($email))
+        if (empty($email)){
             $email = $USER->GetEmail();
+		}
         $orderID = "Order_" . $busValues['PAYMENT_ID'] . "_" . time();
         $params = array(
             'order_id' => $orderID,
@@ -77,14 +78,16 @@ class FondyHandler extends PaySystem\BaseServiceHandler implements PaySystem\IRe
         $error = '';
         $result = new PaySystem\ServiceResult();
         $requestDT = date('c');
-
-        if (empty($payment->getField('PS_INVOICE_ID')))
+		$in_id = $payment->getField('PS_INVOICE_ID');
+        if (empty($in_id)){
             $error = "error invoice id is empty";
-        if ($busValues["PREAUTH"] != 'Y')
+		}
+        if ($busValues["PREAUTH"] != 'Y'){
             $error = Loc::getMessage('FONDY_REFUND_ERROR_HOLD_DSBLD');
+		}
 
         $request = array(
-            "order_id" => $payment->getField('PS_INVOICE_ID'),
+            "order_id" => $in_id,
             "currency" => $payment->getField('PS_CURRENCY'),
             "amount" => round($payment->getField('SUM')*100),
             "merchant_id" => $busValues['MERCHANT']
