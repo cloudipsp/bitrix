@@ -29,11 +29,11 @@ class FondyHandler extends PaySystem\BaseServiceHandler implements PaySystem\IRe
     {
         global $USER;
         $busValues = $this->getParamsBusValue($payment);
-        $amount = round($busValues['SHOULD_PAY'] * 100);
+        $shouldPay = (strlen($busValues['SHOULD_PAY']) > 0) ? $busValues['SHOULD_PAY'] : $GLOBALS["SALE_INPUT_PARAMS"]["ORDER"]["SHOULD_PAY"];
+        $amount = round($shouldPay*100);
         $email = $busValues['BUYER_PERSON_EMAIL'];
-        if (empty($email)){
+        if (empty($email))
             $email = $USER->GetEmail();
-		}
         $orderID = "Order_" . $busValues['PAYMENT_ID'] . "_" . time();
         $params = array(
             'order_id' => $orderID,
