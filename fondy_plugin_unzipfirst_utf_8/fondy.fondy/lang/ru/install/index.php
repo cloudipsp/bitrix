@@ -10,7 +10,7 @@
  *
  * @category        Fondy
  * @package         fondy.fondy
- * @version         1.0.1
+ * @version         1.0.0
  * @author          Fondy
  * @copyright       Copyright (c) 2016 Fondy
  * @license         http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -22,6 +22,6 @@
  *
  */
 
-$MESS['F_MODULE_NAME'] = 'РџР»Р°С‚РµР¶РЅР°СЏ СЃРёСЃС‚РµРјР° Fondy';
-$MESS['F_MODULE_DESC'] = 'РћР±СЂР°Р±РѕС‚С‡РёРє РґР»СЏ РїР»Р°С‚РµР¶РЅРѕР№ СЃРёСЃС‚РµРјС‹ Fondy';
-$MESS['F_ERR_MODULE_NOT_FOUND'] = 'Р”Р»СЏ СѓСЃС‚Р°РЅРѕРІРєРё РґР°РЅРЅРѕРіРѕ СЂРµС€РµРЅРёСЏ РЅРµРѕР±С…РѕРґРёРјРѕ РЅР°Р»РёС‡РёРµ РјРѕРґСѓР»СЏ #MODULE#.';
+$MESS['F_MODULE_NAME'] = 'Платежная система Fondy';
+$MESS['F_MODULE_DESC'] = 'Обработчик для платежной системы Fondy';
+$MESS['F_ERR_MODULE_NOT_FOUND'] = 'Для установки данного решения необходимо наличие модуля #MODULE#.';

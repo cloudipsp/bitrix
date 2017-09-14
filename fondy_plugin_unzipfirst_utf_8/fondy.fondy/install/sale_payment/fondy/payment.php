@@ -1,52 +1,65 @@
-<?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
-	include dirname(__FILE__) . "/fondy.cls.php";
-	global $APPLICATION;
-	$APPLICATION->AddHeadScript('https://api.fondy.eu/static_common/v1/checkout/ipsp.js');	
-	CJSCore::Init(array("jquery"));
-	if ( isset($arResult['ORDER_ID']) ) {
-		$ORDER_ID = $arResult['ORDER_ID'];
-	}
-	else {
-		$ORDER_ID = $_GET['ORDER_ID'];
-	}
-	
-	
-	#--------------------------------------------
-	$ORDER_ID = filter_var($ORDER_ID, FILTER_SANITIZE_NUMBER_INT);
-	$arOrder = CSaleOrder::GetByID($ORDER_ID);
-	$orderID = "Order_".$ORDER_ID."_".CSaleBasket::GetBasketUserID()."_". md5( "Order_".time() );
-	$shouldPay = (strlen(CSalePaySystemAction::GetParamValue("SHOULD_PAY", '')) > 0) ? CSalePaySystemAction::GetParamValue("SHOULD_PAY", 0) : $GLOBALS["SALE_INPUT_PARAMS"]["ORDER"]["SHOULD_PAY"];
-	$amount = round($shouldPay*100);	
-	$formFields = array('order_id' => $orderID,
-    'merchant_id' => CSalePaySystemAction::GetParamValue("MERCHANT"),
-    'order_desc' => '№:' . $ORDER_ID,
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+include dirname(__FILE__) . "/fondy.cls.php";
+
+
+global $APPLICATION;
+$APPLICATION->AddHeadScript('https://api.fondy.eu/static_common/v1/checkout/ipsp.js');
+CJSCore::Init(array("jquery"));
+
+
+$ORDER_ID = (strlen(CSalePaySystemAction::GetParamValue('ORDER_ID')) > 0)
+    ? CSalePaySystemAction::GetParamValue('ORDER_ID')
+    : $GLOBALS['SALE_INPUT_PARAMS']['ORDER']['ID'];
+$orderID = "Order_" . $ORDER_ID . "_" . time();
+$shouldPay = (strlen(CSalePaySystemAction::GetParamValue("SHOULD_PAY", '')) > 0)
+    ? CSalePaySystemAction::GetParamValue("SHOULD_PAY", 0)
+    : $GLOBALS["SALE_INPUT_PARAMS"]["ORDER"]["SHOULD_PAY"];
+$amount = round($shouldPay * 100);
+$merchant_id = CSalePaySystemAction::GetParamValue("MERCHANT");
+$currency = (strlen(CSalePaySystemAction::GetParamValue('PRICE_CURRENCY')) > 0)
+    ? CSalePaySystemAction::GetParamValue('PRICE_CURRENCY')
+    : $GLOBALS['SALE_INPUT_PARAMS']['ORDER']['CURRENCY'];
+$server_callback_url = CSalePaySystemAction::GetParamValue("SERVER_CALLBACK_URL");
+$response_url = CSalePaySystemAction::GetParamValue("RESPONSE_URL");
+$sender_email = $USER->GetEmail();
+$f_lang = CSalePaySystemAction::GetParamValue("LANGUAGE");
+$preauth = CSalePaySystemAction::GetParamValue("PREAUTH");
+$secret_key = CSalePaySystemAction::GetParamValue("SECURE_KEY");
+$formFields = array(
+    'order_id' => $orderID,
+    'merchant_id' => $merchant_id,
+    'order_desc' => $ORDER_ID,
     'amount' => $amount,
-    'currency' => CSalePaySystemAction::GetParamValue("PRICE_CURRENCY"),
-    'server_callback_url' => CSalePaySystemAction::GetParamValue("SERVER_CALLBACK_URL"),
-    'response_url' => CSalePaySystemAction::GetParamValue("RESPONSE_URL"),
-    'lang' => CSalePaySystemAction::GetParamValue("LANGUAGE"),
-    'sender_email' => $USER->GetEmail());
-	if (CSalePaySystemAction::GetParamValue("PREAUTH")=='Y'){
-		$formFields['preauth'] = 'Y';
-	}
-	$formFields['signature'] = Fondy::getSignature($formFields, CSalePaySystemAction::GetParamValue("SECURE_KEY"));
-	$fondyArgsArray = array();
-	foreach ($formFields as $key => $value) {
-		$fondyArgsArray[] = "<input type='hidden' name='$key' value='$value'/>";
-	}
-	if (CSalePaySystemAction::GetParamValue("ONPAGE")!='Y'){
-		$out =  '	<form action="' . Fondy::URL . '" method="post" id="fondy_payment_form">
+    'currency' => $currency,
+    'server_callback_url' => $server_callback_url,
+    'response_url' => $response_url,
+    'lang' => $f_lang,
+    'sender_email' => $sender_email);
+
+
+if ($preauth == 'Y') {
+    $formFields['preauth'] = 'Y';
+}
+$formFields['signature'] = Fondy::getSignature($formFields, $secret_key);
+$fondyArgsArray = array();
+foreach ($formFields as $key => $value) {
+    $fondyArgsArray[] = "<input type='hidden' name='$key' value='$value'/>";
+}
+$on_page = CSalePaySystemAction::GetParamValue("ONPAGE");
+if ($on_page != 'Y') {
+    $out = '<form action="' . Fondy::URL . '" method="post" id="fondy_payment_form">
 		' . implode('', $fondyArgsArray) .
-		'</form>' .
-		"<div><img src='https://fondy.com/img/loader.gif' width='50px' style='margin:20px 20px;'></div>".
-		"<script> setTimeout(function() {
-        document.getElementById('fondy_payment_form').submit();
-		}, 100);
-		</script>";
-	}
-	else{
-		$url = get_checkout($formFields);
-		$out =	"<script>
+        '</form><button style="margin: 10px" class="btn btn-default fondy" type="submit" form="fondy_payment_form">' . GetMessage('SALE_HANDLERS_PAY_SYSTEM_FONDY_BUTTON_PAID') . '</button>' .
+        "";
+    if (strpos($_SERVER['REQUEST_URI'], 'make') !== false) {
+        $out .= "<script> setTimeout(function() {
+			document.getElementById('fondy_payment_form').submit();
+			}, 100);
+			</script>";
+    }
+} else {
+    $url = get_checkout($formFields);
+    $out = "<script>
 		var checkoutStyles = {
 		'html , body' : {
 		'overflow' : 'hidden'
@@ -86,7 +99,7 @@
 		},
 		}
 		</script>";
-		$out .=  '
+    $out .= '
 		<div style="min-height:350px" id="checkout">
 		<div style="min-width:400px;min-height:350px" id="checkout_wrapper"></div>
 		</div>
@@ -110,34 +123,35 @@
 		});
 		};
 		checkoutInit("' . $url . '");
-		</script>';	
-	}
-	echo $out;	
-	function get_checkout($args){
-			if(is_callable('curl_init')){
-			$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, 'https://api.fondy.eu/api/checkout/url/');
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-				curl_setopt($ch, CURLOPT_POST, true);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('request'=>$args)));
-				
-				$result = json_decode(curl_exec($ch));
-				$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-					
-				if ( $httpCode != 200 ){
-					echo "Return code is {$httpCode} \n"
-						.curl_error($ch);
-						exit;
-				} 
-				if ($result->response->response_status == 'failure'){
-					echo $result->response->error_message;
-					exit;
-				}
-				$url = $result->response->checkout_url;
-				return $url;
-			}else{
-				echo "Curl not found!";
-				die;
-			}			
-		}
+		</script>';
+}
+echo $out;
+function get_checkout($args)
+{
+    if (is_callable('curl_init')) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.fondy.eu/api/checkout/url/');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('request' => $args)));
+
+        $result = json_decode(curl_exec($ch));
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($httpCode != 200) {
+            echo "Return code is {$httpCode} \n"
+                . curl_error($ch);
+            exit;
+        }
+        if ($result->response->response_status == 'failure') {
+            echo $result->response->error_message;
+            exit;
+        }
+        $url = $result->response->checkout_url;
+        return $url;
+    } else {
+        echo "Curl not found!";
+        die;
+    }
+}

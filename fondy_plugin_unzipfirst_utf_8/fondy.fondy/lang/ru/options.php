@@ -10,7 +10,7 @@
 	*
  * @category        Fondy
  * @package         fondy.fondy
- * @version         1.0.1
+ * @version         1.0.0
  * @author          Fondy
  * @copyright       Copyright (c) 2016 Fondy
  * @license         http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -22,7 +22,7 @@
 	*
  */
 
-$MESS['F_PUBLIC_KEY'] = 'Публичный ключ';
-$MESS['F_PUBLIC_KEY_INFO'] = 'получить ключ можно в';
-$MESS['F_PUBLIC_KEY_INFO_LINK_NAME'] = 'настройках магазина';
-$MESS['F_SAVE'] = "Сохранить";
+$MESS['F_PUBLIC_KEY'] = '????????? ????';
+$MESS['F_PUBLIC_KEY_INFO'] = '???????? ???? ????? ?';
+$MESS['F_PUBLIC_KEY_INFO_LINK_NAME'] = '?????????? ????????';
+$MESS['F_SAVE'] = "?????????";
