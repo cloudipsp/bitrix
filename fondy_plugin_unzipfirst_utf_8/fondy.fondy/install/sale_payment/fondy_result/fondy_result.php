@@ -39,6 +39,7 @@ if (CModule::IncludeModule('sale')) {
         $answer = 'declined';
     } elseif ($fondyResult == true) {
         $answer = 'OK';
+		CSaleOrder::PayOrder($arOrder['ID'], 'Y');
     } else {
         $answer = $fondyResult;
     }
@@ -62,4 +63,3 @@ if (CModule::IncludeModule('sale')) {
 }
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/epilog_after.php");
-	

@@ -1,11 +1,5 @@
-<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+<?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 include dirname(__FILE__) . "/fondy.cls.php";
-
-
-global $APPLICATION;
-$APPLICATION->AddHeadScript('https://api.fondy.eu/static_common/v1/checkout/ipsp.js');
-CJSCore::Init(array("jquery"));
-
 
 $ORDER_ID = (strlen(CSalePaySystemAction::GetParamValue('ORDER_ID')) > 0)
     ? CSalePaySystemAction::GetParamValue('ORDER_ID')
@@ -49,7 +43,8 @@ $on_page = CSalePaySystemAction::GetParamValue("ONPAGE");
 if ($on_page != 'Y') {
     $out = '<form action="' . Fondy::URL . '" method="post" id="fondy_payment_form">
 		' . implode('', $fondyArgsArray) .
-        '</form><button style="margin: 10px" class="btn btn-default fondy" type="submit" form="fondy_payment_form">' . GetMessage('SALE_HANDLERS_PAY_SYSTEM_FONDY_BUTTON_PAID') . '</button>' .
+        '</form>
+		<button style="margin: 10px; background: url(https://fondy.eu/static/image/button5.png);background-size: cover;background-repeat: no-repeat;padding: 23px 100px;border: 0;" type="submit" form="fondy_payment_form"></button>' .
         "";
     if (strpos($_SERVER['REQUEST_URI'], 'make') !== false) {
         $out .= "<script> setTimeout(function() {
@@ -58,8 +53,12 @@ if ($on_page != 'Y') {
 			</script>";
     }
 } else {
-    $url = get_checkout($formFields);
-    $out = "<script>
+    $url = get_fondy_checkout($formFields);
+	
+    $out = "
+	<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+	<script type='text/javascript' src='https://api.fondy.eu/static_common/v1/checkout/ipsp.js'></script>
+	<script>
 		var checkoutStyles = {
 		'html , body' : {
 		'overflow' : 'hidden'
@@ -101,7 +100,7 @@ if ($on_page != 'Y') {
 		</script>";
     $out .= '
 		<div style="min-height:350px" id="checkout">
-		<div style="min-width:400px;min-height:350px" id="checkout_wrapper"></div>
+		<div style="min-width:400px;min-height:450px" id="checkout_wrapper"></div>
 		</div>
 		<script>
 		function checkoutInit(url) {
@@ -126,7 +125,7 @@ if ($on_page != 'Y') {
 		</script>';
 }
 echo $out;
-function get_checkout($args)
+function get_fondy_checkout($args)
 {
     if (is_callable('curl_init')) {
         $ch = curl_init();
@@ -155,3 +154,4 @@ function get_checkout($args)
         die;
     }
 }
+?>

@@ -1,18 +1,18 @@
-<?
+<?php
 global $MESS;
-$MESS['FONDY_ORDER_ID'] = 'Уникальный ID покупки в Вашем магазине';
-$MESS["FONDY_MERCHANT"] = "Идентификатор мерчанта";
-$MESS["FONDY_SECURE_KEY"] = "Секретный ключ";
+$MESS['FONDY_ORDER_ID'] = 'РЈРЅРёРєР°Р»СЊРЅС‹Р№ ID РїРѕРєСѓРїРєРё РІ Р’Р°С€РµРј РјР°РіР°Р·РёРЅРµ';
+$MESS["FONDY_MERCHANT"] = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РјРµСЂС‡Р°РЅС‚Р°";
+$MESS["FONDY_SECURE_KEY"] = "РЎРµРєСЂРµС‚РЅС‹Р№ РєР»СЋС‡";
 $MESS["SALE_HANDLERS_PAY_SYSTEM_FONDY_BUTTON_PAID"] = "Fondy Pay";
-$MESS["FONDY_PRICE_CURRENCY"] = "Валюта платежа";
-$MESS["FONDY_DESC_PRICE_CURRENCY"] = "<b style='color=#aeaeae;'>Внимание!</b> Это значение должно соответствовать валюте вашего мерчанта";
-$MESS["FONDY_RESPONSE_URL"] = "Ссылка возврата клиента";
-$MESS["FONDY_DESC_RESPONSE_URL"] = "Ссылка, на которую вернется клиент после завершения платежа. <br>Например http://{yourdomain}/personal/order/";
-$MESS["FONDY_SERVER_CALLBACK_URL"] = "Ссылка ответа платежной системы";
-$MESS["FONDY_DESC_SERVER_CALLBACK_URL"] = "Ссылка, на которую зайдет платежная система для завершения заказа.<br>Например http://{yourdomain}/bitrix/tools/fondy_result/fondy_result.php";
-$MESS["FONDY_LANGUAGE"] = "Язык страницы платежной системы";
-$MESS["FONDY_DESC_LANGUAGE"] = "Например : RU";
-$MESS["FONDY_AMOUNT"] = "Сумма для списания при оплате в магазине";
-$MESS["FONDY_ONPAGE"] = "Включить режим оплаты на странице магазина";
-$MESS["FONDY_PREAUTH"] = "Холдирование платежа (Параметр применяется только при оплате картой Visa/MasterCard)";
+$MESS["FONDY_PRICE_CURRENCY"] = "Р’Р°Р»СЋС‚Р° РїР»Р°С‚РµР¶Р°";
+$MESS["FONDY_DESC_PRICE_CURRENCY"] = "<b style='color=#aeaeae;'>Р’РЅРёРјР°РЅРёРµ!</b> Р­С‚Рѕ Р·РЅР°С‡РµРЅРёРµ РґРѕР»Р¶РЅРѕ СЃРѕРѕС‚РІРµС‚СЃС‚РІРѕРІР°С‚СЊ РІР°Р»СЋС‚Рµ РІР°С€РµРіРѕ РјРµСЂС‡Р°РЅС‚Р°";
+$MESS["FONDY_RESPONSE_URL"] = "РЎСЃС‹Р»РєР° РІРѕР·РІСЂР°С‚Р° РєР»РёРµРЅС‚Р°";
+$MESS["FONDY_DESC_RESPONSE_URL"] = "РЎСЃС‹Р»РєР°, РЅР° РєРѕС‚РѕСЂСѓСЋ РІРµСЂРЅРµС‚СЃСЏ РєР»РёРµРЅС‚ РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ РїР»Р°С‚РµР¶Р°. <br>РќР°РїСЂРёРјРµСЂ http://{yourdomain}/personal/order/";
+$MESS["FONDY_SERVER_CALLBACK_URL"] = "РЎСЃС‹Р»РєР° РѕС‚РІРµС‚Р° РїР»Р°С‚РµР¶РЅРѕР№ СЃРёСЃС‚РµРјС‹";
+$MESS["FONDY_DESC_SERVER_CALLBACK_URL"] = "РЎСЃС‹Р»РєР°, РЅР° РєРѕС‚РѕСЂСѓСЋ Р·Р°Р№РґРµС‚ РїР»Р°С‚РµР¶РЅР°СЏ СЃРёСЃС‚РµРјР° РґР»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ Р·Р°РєР°Р·Р°.<br>РќР°РїСЂРёРјРµСЂ http://{yourdomain}/bitrix/tools/fondy_result/fondy_result.php";
+$MESS["FONDY_LANGUAGE"] = "РЇР·С‹Рє СЃС‚СЂР°РЅРёС†С‹ РїР»Р°С‚РµР¶РЅРѕР№ СЃРёСЃС‚РµРјС‹";
+$MESS["FONDY_DESC_LANGUAGE"] = "РќР°РїСЂРёРјРµСЂ : RU";
+$MESS["FONDY_AMOUNT"] = "РЎСѓРјРјР° РґР»СЏ СЃРїРёСЃР°РЅРёСЏ РїСЂРё РѕРїР»Р°С‚Рµ РІ РјР°РіР°Р·РёРЅРµ";
+$MESS["FONDY_ONPAGE"] = "Р’РєР»СЋС‡РёС‚СЊ СЂРµР¶РёРј РѕРїР»Р°С‚С‹ РЅР° СЃС‚СЂР°РЅРёС†Рµ РјР°РіР°Р·РёРЅР°";
+$MESS["FONDY_PREAUTH"] = "РҐРѕР»РґРёСЂРѕРІР°РЅРёРµ РїР»Р°С‚РµР¶Р° (РџР°СЂР°РјРµС‚СЂ РїСЂРёРјРµРЅСЏРµС‚СЃСЏ С‚РѕР»СЊРєРѕ РїСЂРё РѕРїР»Р°С‚Рµ РєР°СЂС‚РѕР№ Visa/MasterCard)";
 ?>
