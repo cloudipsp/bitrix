@@ -10,7 +10,7 @@
 	*
  * @category        Fondy
  * @package         fondy.fondy
- * @version         1.0.0
+ * @version         1.1.5
  * @author          Fondy
  * @copyright       Copyright (c) 2016 Fondy
  * @license         http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
