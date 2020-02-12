@@ -44,7 +44,7 @@ $url = Fondy::get_fondy_checkout($formFields);
 $on_page = CSalePaySystemAction::GetParamValue("ONPAGE");
 if ($on_page != 'Y') {
     $out = '<a href="'.$url.'" id="fondy_payment_form" 
-            style="margin: 10px;background: url(https://fondy.eu/static/image/button5.png);background-size:cover;background-repeat:no-repeat;padding: 23px 100px;border:0;">
+            style="margin: 10px;background: url(https://fondy.eu/static/image/button5.png);background-size:cover;background-repeat:no-repeat;padding: 15px 100px;border:0;">
             </a>';
     if (strpos($_SERVER['REQUEST_URI'], 'make') !== false) {
         $out .= "<script> setTimeout(function() {
