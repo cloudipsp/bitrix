@@ -1,13 +1,14 @@
 <?php
-ini_set("display_errors", true);
-error_reporting(E_ALL);
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") die();
-if (!require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php")) die('prolog_before.php not found!');
+if (!require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php")) {
+    die('prolog_before.php not found!');
+}
 
 if (CModule::IncludeModule('sale')) {
     if (empty($_POST)) {
         $callback = json_decode(file_get_contents("php://input"));
+        if (empty($callback))
+            die;
         $_POST = array();
         foreach ($callback as $key => $val) {
             $_POST[$key] = $val;
@@ -26,7 +27,7 @@ if (CModule::IncludeModule('sale')) {
     $temp = CSalePaySystemAction::GetList(array(), array("PAY_SYSTEM_ID" => $payID));
     $payData = $temp->Fetch();
 
-    include $_SERVER['DOCUMENT_ROOT'] . $payData['ACTION_FILE'] . "/fondy.cls.php";
+    require $_SERVER['DOCUMENT_ROOT'] . $payData['ACTION_FILE'] . "/fondy.cls.php";
 
     $fondyOpt = array();
     $b = unserialize($payData['PARAMS']);
@@ -39,11 +40,11 @@ if (CModule::IncludeModule('sale')) {
         $answer = 'declined';
     } elseif ($fondyResult == true) {
         $answer = 'OK';
-		CSaleOrder::PayOrder($arOrder['ID'], 'Y');
+        CSaleOrder::PayOrder($arOrder['ID'], 'Y');
     } else {
         $answer = $fondyResult;
     }
-    
+
     if ($arOrder) {
         $arFields = array(
             "STATUS_ID" => $answer == 'OK' ? "P" : "N",
@@ -58,8 +59,10 @@ if (CModule::IncludeModule('sale')) {
             "PS_RESPONSE_DATE" => date("d.m.Y H:i:s"),
         );
     }
-    CSaleOrder::Update($ORDER_ID, $arFields);
-    echo $answer . "<script>window.location.replace('/personal/order/');</script>";
+    if ($_POST['order_status'] === Fondy::ORDER_APPROVED or $_POST['order_status'] === Fondy::ORDER_DECLINED) {
+        CSaleOrder::Update($ORDER_ID, $arFields);
+    }
+    echo $answer . "<script>window.location.replace('/personal/orders/');</script>";
 }
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/epilog_after.php");

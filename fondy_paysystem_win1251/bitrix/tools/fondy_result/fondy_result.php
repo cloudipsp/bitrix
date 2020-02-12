@@ -1,7 +1,4 @@
 <?php
-ini_set("display_errors", true);
-error_reporting(E_ALL);
-
 if ($_SERVER["REQUEST_METHOD"] !== "POST") die();
 if (!require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php")) die('prolog_before.php not found!');
 
@@ -57,8 +54,11 @@ if (CModule::IncludeModule('sale')) {
 			"PS_RESPONSE_DATE" => date("d.m.Y H:i:s"),
 		);
 	}
-	CSaleOrder::Update($ORDER_ID, $arFields);
-	echo $answer . "<script>window.location.replace('/personal/order/');</script>";
+	if ($_POST['order_status'] === Fondy::ORDER_APPROVED or $_POST['order_status'] === Fondy::ORDER_DECLINED) {
+        CSaleOrder::Update($ORDER_ID, $arFields);
+    }
+
+	echo $answer . "<script>window.location.replace('/personal/orders/');</script>";
 }
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/epilog_after.php");
