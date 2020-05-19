@@ -32,9 +32,12 @@ $formFields = array(
     'currency' => $currency,
     'server_callback_url' => $server_callback_url,
     'response_url' => $response_url,
-    'lang' => $f_lang,
-    'sender_email' => $sender_email
+    'lang' => $f_lang
 );
+
+if (!empty($sender_email)) {
+    $formFields['sender_email'] = $sender_email;
+}
 
 if ($preauth == 'Y') {
     $formFields['preauth'] = 'Y';
