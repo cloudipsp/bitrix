@@ -29,7 +29,7 @@ Loc::loadMessages(__FILE__);
         </form>
         <div class="sale-paysystem-fondy-button-container">
 			<span class="sale-paysystem-fondy-button">
-				<button style="margin: 10px;padding: 15px 50px;border: 0;background-color: #62ba46;color: #fff;border-radius: 7px;font-size: 18px;" class="btn btn-default fondy" type="submit" form="fondy_payment_form"><?= Loc::getMessage('SALE_HANDLERS_PAY_SYSTEM_FONDY_BUTTON_PAID') ?></button>
+				<button style="margin: 10px;padding: 15px 50px;border: 0;background-color: #62ba46;color: #fff;border-radius: 7px;font-size: 18px;text-decoration: none;" class="btn btn-default fondy" type="submit" form="fondy_payment_form"><?= Loc::getMessage('SALE_HANDLERS_PAY_SYSTEM_FONDY_BUTTON_PAID') ?></button>
 			</span>
             <span
                 class="sale-paysystem-fondy-button-descrition"><?= Loc::getMessage('SALE_HANDLERS_PAY_SYSTEM_FONDY_REDIRECT_MESS'); ?></span>

@@ -50,7 +50,7 @@ $formFields['signature'] = Fondy::getSignature($formFields, $secret_key);
 $url = Fondy::get_fondy_checkout($formFields);
 $on_page = CSalePaySystemAction::GetParamValue("ONPAGE");
 if ($on_page != 'Y') {
-    $out = '<a href="'.$url.'" id="fondy_payment_form" style="margin: 10px;padding: 15px 50px;border: 0;background-color: #62ba46;color: #fff;border-radius: 7px;font-size: 18px;">' . Loc::getMessage("SALE_HANDLERS_PAY_SYSTEM_FONDY_BUTTON_PAID") . '</a>';
+    $out = '<a href="'.$url.'" id="fondy_payment_form" style="margin: 10px;padding: 15px 50px;border: 0;background-color: #62ba46;color: #fff;border-radius: 7px;font-size: 18px;text-decoration: none;">' . Loc::getMessage("SALE_HANDLERS_PAY_SYSTEM_FONDY_BUTTON_PAID") . '</a>';
     if (strpos($_SERVER['REQUEST_URI'], 'make') !== false) {
         $out .= "<script> setTimeout(function() {
 			document.getElementById('fondy_payment_form').click();
